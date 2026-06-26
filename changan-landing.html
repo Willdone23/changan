@@ -223,9 +223,11 @@
     align-items: center;
     justify-content: center;
   }
-  .logo-mark svg {
+  .logo-mark svg,
+  .logo-mark img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
   }
   .nav-links {
     display: flex;
@@ -425,6 +427,10 @@
     margin: 0 auto;
     border-radius: var(--radius-lg);
   }
+  .product-visual > img.product-whitebg {
+    border-radius: 0;
+    box-shadow: none;
+  }
   .product-visual::before {
     content: '';
     position: absolute;
@@ -435,6 +441,9 @@
     height: 100%;
     background: radial-gradient(circle, rgba(168, 68, 60, 0.06) 0%, transparent 65%);
     z-index: -1;
+  }
+  .product-visual:has(img.product-whitebg)::before {
+    display: none;
   }
   .product-info .eyebrow {
     display: inline-block;
@@ -830,9 +839,10 @@
 
   /* ===== Footer ===== */
   .footer {
-    background: var(--ink);
-    color: rgba(255,255,255,0.6);
+    background: var(--bg);
+    color: var(--ink-muted);
     padding: 60px 0 28px;
+    border-top: 1px solid var(--rule);
   }
   .footer-grid {
     display: grid;
@@ -841,21 +851,25 @@
     margin-bottom: 48px;
   }
   .footer-brand .logo {
-    color: white;
+    color: var(--ink);
     margin-bottom: 16px;
   }
   .footer-brand .logo-mark svg path,
   .footer-brand .logo-mark svg circle {
-    fill: rgba(255,255,255,0.9);
+    fill: var(--brand);
+  }
+  .footer-brand .logo-mark img {
+    filter: none;
+    opacity: 1;
   }
   .footer-brand p {
     font-size: 0.88rem;
     line-height: 1.8;
-    color: rgba(255,255,255,0.5);
+    color: var(--ink-muted);
     max-width: 300px;
   }
   .footer-col h4 {
-    color: rgba(255,255,255,0.9);
+    color: var(--ink);
     font-size: 0.9rem;
     margin-bottom: 20px;
     font-family: 'InstrumentSans', sans-serif;
@@ -867,15 +881,15 @@
     gap: 12px;
   }
   .footer-col a {
-    color: rgba(255,255,255,0.5);
+    color: var(--ink-muted);
     font-size: 0.88rem;
     transition: color 0.2s;
   }
   .footer-col a:hover {
-    color: rgba(255,255,255,0.85);
+    color: var(--brand);
   }
   .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--rule);
     padding-top: 24px;
     display: flex;
     justify-content: space-between;
@@ -883,7 +897,7 @@
     flex-wrap: wrap;
     gap: 16px;
     font-size: 0.82rem;
-    color: rgba(255,255,255,0.4);
+    color: var(--ink-light);
   }
   .footer-tagline {
     font-family: 'Lora', serif;
@@ -959,19 +973,7 @@
     <div class="nav-inner">
       <a href="#" class="logo">
         <span class="logo-mark">
-          <!-- Logo SVG: 开口珠·山形 -->
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- 开口圆环（佛珠开口） -->
-            <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20"
-                  stroke="#A8443C" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <!-- 顶部两颗小珠 -->
-            <circle cx="9.5" cy="11.5" r="2" fill="#A8443C"/>
-            <circle cx="30.5" cy="11.5" r="2" fill="#A8443C"/>
-            <!-- 中间顶珠 -->
-            <circle cx="20" cy="8" r="2.5" fill="#A8443C"/>
-            <!-- 山形（下半部分实心山） -->
-            <path d="M8 28L14 20L18 25L22 18L26 24L32 28Z" fill="#A8443C"/>
-          </svg>
+          <img src="./assets/changan-logo.png" alt="长安 Logo" />
         </span>
         长安
       </a>
@@ -979,7 +981,6 @@
         <a href="#product">产品</a>
         <a href="#scenarios">场景</a>
         <a href="#app">App</a>
-        <a href="#pricing">价格</a>
         <a href="#story">故事</a>
       </div>
       <div class="nav-cta">
@@ -1002,7 +1003,7 @@
         </h1>
         <p class="hero-subtitle">
           看起来就是一串普通的玛瑙手串，
-          藏着最先进的守护科技。
+          却藏着先进的守护科技。
           她戴着像往常一样捻珠子，
           你在千里之外，知道她安好。
         </p>
@@ -1013,9 +1014,9 @@
         <p class="hero-tagline">长安，常安。</p>
       </div>
       <div class="hero-image fade-in">
-        <img src="./assets/product-red-agate-whitebg.jpg" alt="长安手串·红玛瑙莲花福牌款">
+        <img src="./assets/product-detail-female.jpg" alt="戴着长安手串的手">
         <div class="hero-caption">
-          <p>天然红玛瑙 · 莲花福牌主珠 · 藏着24小时的默默守护</p>
+          <p>外婆说，这串珠子戴着顺手，跟以前庙里求的一样，心里踏实。</p>
         </div>
       </div>
     </div>
@@ -1039,10 +1040,10 @@
           每次打电话问"身体好吗"，她总说"好着呢，放心"。可我怎么放得下心。
         </p>
         <p>
-          想给她买个智能手环，她不愿意戴——"那是病人戴的东西"、"别人看着笑话"。
+          想给她买个智能手环，她不愿意戴——"那是年轻人戴的东西"、"别人看着笑话"。
         </p>
         <p>
-          于是有了「长安」。<strong style="color: var(--brand);">不是科技产品，是一串保平安的珠子。</strong>
+          于是有了「长安」。<strong style="color: var(--brand);">守护长辈常安，愿子女都心安。</strong>
         </p>
         <div class="story-stats">
           <div class="story-stat">
@@ -1075,7 +1076,7 @@
     <!-- 福系列 · 红玛瑙莲花福牌款 -->
     <div class="product-showcase">
       <div class="product-visual fade-in">
-        <img src="./assets/hero-grandma.jpg" alt="外婆戴着长安手串">
+        <img src="./assets/red-agate-lotus-whitebg-v3.jpg" alt="长安手串·红玛瑙莲花福牌款" class="product-whitebg">
       </div>
       <div class="product-info fade-in">
         <span class="eyebrow">长安·福系列</span>
@@ -1267,90 +1268,6 @@
   </div>
 </section>
 
-<!-- ===== Pricing Section ===== -->
-<section class="pricing-section section" id="pricing">
-  <div class="container">
-    <div class="section-header fade-in">
-      <span class="eyebrow">PRICING · 选择你的长安</span>
-      <h2>不同的材质，<br>一样的平安。</h2>
-      <p>从入门到典藏，每一款都是用心之作。选一串最合心意的，送给最牵挂的人。</p>
-    </div>
-    <div class="pricing-grid">
-      <!-- 基础款 -->
-      <div class="pricing-card fade-in">
-        <div class="pricing-name">福珠·基础款</div>
-        <div class="pricing-desc">红玛瑙手串 · 基础守护功能</div>
-        <div class="pricing-price">
-          <span class="amount">¥399</span>
-          <span class="unit">/ 串</span>
-        </div>
-        <ul class="pricing-features">
-          <li>天然红玛瑙圆珠</li>
-          <li>心率 + 血氧监测</li>
-          <li>AI跌倒检测</li>
-          <li>一键SOS呼叫</li>
-          <li>北斗+GPS定位</li>
-          <li>15天续航</li>
-          <li>IP68防水</li>
-          <li>4G全网通（首年免费）</li>
-          <li>基础版App功能</li>
-        </ul>
-        <a href="#" class="btn btn-secondary">选择基础款</a>
-      </div>
-
-      <!-- 推荐款 -->
-      <div class="pricing-card featured fade-in">
-        <span class="pricing-badge">最受欢迎</span>
-        <div class="pricing-name">福珠·莲花款</div>
-        <div class="pricing-desc">红玛瑙莲花福牌 · 全功能版</div>
-        <div class="pricing-price">
-          <span class="amount">¥699</span>
-          <span class="unit">/ 串</span>
-        </div>
-        <ul class="pricing-features">
-          <li>红玛瑙莲花福牌主珠</li>
-          <li>心率 + 血氧 + 体温监测</li>
-          <li>AI跌倒检测（升级版）</li>
-          <li>一键SOS呼叫</li>
-          <li>北斗+GPS+基站定位</li>
-          <li>20天续航</li>
-          <li>IP68 + 5ATM防水</li>
-          <li>4G+NB双通信</li>
-          <li>高级版App功能</li>
-          <li>健康月报分析</li>
-          <li>多人守护（5人）</li>
-        </ul>
-        <a href="#" class="btn btn-primary">选择莲花款</a>
-      </div>
-
-      <!-- 高端款 -->
-      <div class="pricing-card fade-in">
-        <div class="pricing-name">墨珠·典藏款</div>
-        <div class="pricing-desc">墨玉云纹桶珠 · 男士典藏版</div>
-        <div class="pricing-price">
-          <span class="amount">¥1299</span>
-          <span class="unit">/ 串</span>
-        </div>
-        <ul class="pricing-features">
-          <li>墨玉浮雕云纹桶珠</li>
-          <li>心率 + 血氧 + 体温 + 血压</li>
-          <li>AI跌倒+异常行为识别</li>
-          <li>一键SOS呼叫</li>
-          <li>四模高精度定位</li>
-          <li>30天超长续航</li>
-          <li>IP68 + 5ATM防水</li>
-          <li>4G+NB+WiFi三通信</li>
-          <li>专业版全部功能</li>
-          <li>专属健康顾问</li>
-          <li>年度体检报告解读</li>
-          <li>礼盒精装 · 刻字服务</li>
-        </ul>
-        <a href="#" class="btn btn-secondary">选择典藏款</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== Quote Section ===== -->
 <section class="quote-section section">
   <div class="container">
@@ -1400,20 +1317,12 @@
       <div class="footer-brand">
         <div class="logo">
           <span class="logo-mark">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20"
-                    stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" fill="none"/>
-              <circle cx="9.5" cy="11.5" r="2" fill="rgba(255,255,255,0.9)"/>
-              <circle cx="30.5" cy="11.5" r="2" fill="rgba(255,255,255,0.9)"/>
-              <circle cx="20" cy="8" r="2.5" fill="rgba(255,255,255,0.9)"/>
-              <path d="M8 28L14 20L18 25L22 18L26 24L32 28Z" fill="rgba(255,255,255,0.9)"/>
-            </svg>
+            <img src="./assets/changan-logo.png" alt="长安 Logo" class="footer-logo-img" />
           </span>
           长安
         </div>
         <p>
-          不是科技产品，是一串保平安的珠子。
-          愿天下老人长安，愿每个子女心安。
+          守护长辈常安，愿子女都心安。
         </p>
       </div>
       <div class="footer-col">
